@@ -1,0 +1,115 @@
+<div class="flex flex-column align-items-center justify-content-center h-full py-5 px-3">
+  <i class="pi pi-fw pi-check mr-2 text-2xl"></i>
+  <p class="m-0 mt-5 text-center text-lg">
+    
+ <h2 class="title text-center">
+  <span class="text-primary">Votre Données </span>
+    Personnelles
+</h2>
+</div>
+<form  class=" row g-3" *ngIf="client">
+  <div class="col-md-6" >
+      <label for="name">{{client.lastName}}</label>
+      </div>
+  <div class="col-md-6">
+      <label for="name">{{client.firstName}}</label>
+      </div>
+      <div class="col-6">
+          <label for="name">{{client.email}}</label>
+      </div>
+        <div class="col-6">
+          <label class="form-label">{{client.gender}}</label>
+</div>   
+<div class="col-6">
+  <label for="name">{{client.birthDate}}</label>
+</div> 
+
+
+<div class="col-md-6">
+  <label for="name">{{client.birthplace}}</label>
+</div>
+
+  <div class="col-md-6">
+      <label for="name">{{client.jobTitle}}</label>
+      </div>
+      <div class="col-md-6">
+          <label class="form-label">{{client.nationality}}</label>
+          </div>
+
+  
+   <div class="col-md-6">
+      <label class="form-label">{{client.maritalStatus}}</label>
+  </div>
+  
+          <div class="col-md-6">
+              <label class="form-label">{{client.phoneNumber}}</label>
+          </div>
+  
+          <div class="col-md-6">
+                  <label for="name">{{client.landLine}}</label>
+                  </div> 
+       
+                      
+ <h2 class="title text-center">
+  <span class="text-primary">Votre Demande  </span>
+  De simulation
+</h2> 
+<form  class=" row g-3" *ngIf="demandeSimulation">
+  <div class="col-md-6" >
+      <label for="name">  <span class="text-primary">Durée</span> {{demandeSimulation.duree}}</label>
+      </div>
+  <div class="col-md-6">
+      <label for="name">
+        <span class="text-primary">Nombre d'echeance</span> {{demandeSimulation.nbrEcheance}}</label>
+      </div>
+
+      <div class="col-md-6">
+        <label for="name">
+      <span class="text-primary">Nom de Véhicule </span>{{demandeSimulation.product.name}}</label>
+    </div>
+
+    <div class="col-md-6">
+      <label for="name">
+    <span class="text-primary">prix de Véhicule </span>{{demandeSimulation.product.prix}}</label>
+  </div>
+  <div class="col-md-6">
+      <br>
+      <button pButton pRipple label="Valider" icon="pi pi-check" class="p-button" (click)="valider()"></button>
+
+  </div>
+  <div class="col-md-6">
+<br>
+  <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-danger mr-2 mb-2"(click)="cancel()"></button>
+</div>
+
+</form>
+
+<p-dialog [(visible)]="demandeVerifDialog" [style]="{width: '450px'}"  header="Votre demande est enregistrer " [modal]="true" class="p-fluid">
+  
+      
+      
+          <div class="field col">
+              <label for="name">votre demande est encours de traitement la reponse sera convoqueé par email dans les plus bref delais </label>
+              </div>
+              <button pButton pRipple label="Ok" icon="pi pi-check" class="p-button" (click)="okay()"></button>
+
+
+
+      
+
+  
+  
+
+</p-dialog>
+<p-dialog [(visible)]="demandeSuppDialog" header="Supprimer votre Demande" [modal]="true" [style]="{width:'450px'}">
+  
+  <div class="flex align-items-center justify-content-center">
+      <i class="pi pi-exclamation-triangle mr-3 error" style="font-size: 2rem"></i>
+      <span >êtes-vous sûr de vouloir supprimer <b></b>?</span>
+  </div>
+  <div class="flex flex-end" style="align-items: flex-end">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="demandeSuppDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="delete()"></button>
+  </div>
+</p-dialog>
+

@@ -1,0 +1,68 @@
+<ng-template pTemplate="content">
+    <div class="field">
+        <label for="name">Nom</label>
+        <input type="text" pInputText id="name" [(ngModel)]="user.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.firstName}"/>
+        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.firstName">Nom est obligatoire.</small>
+    </div>
+    <div class="field">
+        <label for="name">Prenom</label>
+        <input type="text" pInputText id="name" [(ngModel)]="user.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.lastName}"/>
+        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.lastName">Prenom est obligatoire.</small>
+    </div>
+
+    <div class="field">
+        <label for="status">Inventory Status</label>
+        <p-dropdown id="status" [options]="statuses" optionLabel="label" [(ngModel)]="product.inventoryStatus" placeholder="Select a Status">
+            <ng-template pTemplate="selectedItem">
+                <span *ngIf="product && product.inventoryStatus" [class]="'product-badge status-' + product.inventoryStatus.value">{{product.inventoryStatus.label}}</span>
+            </ng-template>
+            <ng-template let-status pTemplate="status">
+                <span [class]="'product-badge status-' + status.value.toLowerCase()">{{status.label}}</span>
+            </ng-template>
+        </p-dropdown>
+    </div>
+
+    <div class="field">
+        <label class="mb-3">Category</label>
+        <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.category"></p-radioButton>
+                <label for="category1">Accessories</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
+                <label for="category2">Clothing</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
+                <label for="category3">Electronics</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
+                <label for="category4">Fitness</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="formgrid grid">
+        <div class="field col">
+            <label for="price">Price</label>
+            <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+        </div>
+        <div class="field col">
+            <label for="quantity">Quantity</label>
+            <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+</ng-template>
+    <div class="layout-sidebar">        
+        <app-menu-back-office>
+    
+        </app-menu-back-office>
+             </div> 
+   

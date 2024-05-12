@@ -1,0 +1,136 @@
+
+ <h2 class="title text-center">
+    <span class="text-primary">Simulateur </span>
+     de Financement
+</h2> 
+
+    <form [formGroup]="simulationForm">
+        <div class="field col-12 md:col-4">
+             <h5>Véhicule</h5>
+             <div>
+
+             <button pButton pRipple type="button" icon="pi pi-car" (click)="getAllVehicule()" label="Consulter la listes des voitures neuves" class="p-button-rounded p-button-secondary mr-2 mb-2"></button>
+
+             <p-dropdown  matColumnDef="vehicule"id="vehicule" formControlName="vehicule" required [options]="vehicules" optionLabel="name" [(ngModel)]="selectedDrop" placeholder="Choisir une Véhicule"  [ngClass]="{'ng-invalid ng-dirty' : submitted && simulationForm.controls['vehicule'].errors}"  [showClear]="true">
+
+            </p-dropdown>
+        </div>
+
+             
+
+
+            <div *ngIf="simulationForm.controls['vehicule'].errors">
+    <small class="error" *ngIf="submitted && simulationForm.controls['vehicule'].errors.required">*Le champs vehicule est obligatoire.</small>
+
+    </div>
+            <div  class="field col-12">
+                <h5 >Echeance En DT</h5>
+            <input type="text"id="echeance" pInputText  formControlName="echeance"[(ngModel)]="valSlider" readonly/>
+ <p-slider  matColumnDef="echeance" formControlName="echeance" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && simulationForm.controls['echeance'].errors}"  [(ngModel)]="valSlider"></p-slider>
+
+
+ <div *ngIf="simulationForm.controls['echeance'].errors">
+                <small class="error" *ngIf="submitted && simulationForm.controls['echeance'].errors.required">*Le champs echéance est obligatoire.</small>
+        </div>
+        </div>
+        <!-- <mat-slider
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="1000"
+  step="1000"
+  min="0"
+  max="100000"
+  aria-label="units"></mat-slider> -->
+
+            <div class="field col-12 md:col-4">
+                <h5> Durée En mois</h5> 
+               <input type="text" id="duree" pInputText  formControlName="duree" [(ngModel)]="duree" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && simulationForm.controls['duree'].errors}"  />
+               <div *ngIf="simulationForm.controls['duree'].errors">
+                <small class="error" *ngIf="submitted && simulationForm.controls['duree'].errors.required">*Le champs duréé est obligatoire.</small>
+            </div>
+
+    
+        </div>
+            <button pButton pRipple type="button" label="Suivant" class="p-button-info p-button-text mr-2 mb-2"(click)="saveSimulation()"></button>
+
+        </div>
+    </form>
+
+
+
+
+
+
+     
+<p-dialog [(visible)]="GetAllVehiculeDialog" [style]="{width: '700px',height: '600px'}" header="Liste des Véhicules" [modal]="true" class="p-fluid">
+        <div class="row">
+            <div class="col-12">
+              <div class="card">    
+                <div class="table-responsive">
+                  <p-toolbar styleClass="mb-4">
+                      <ng-template pTemplate="left">
+                          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                              <h5 class="m-0">Liste des Vehicule</h5>
+                          </div>
+                      </ng-template>
+                  </p-toolbar>
+                  <table mat-table [dataSource]="produitsDataSource" matSort (matSortChange)="customSort($event)" class="mat-elevation-z8">
+                    <ng-container matColumnDef="name" >
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom  </th>
+                  
+                      <td mat-cell *matCellDef="let element">   {{element.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="prix">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix </th>
+                      <td mat-cell *matCellDef="let element">  {{element.prix}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="modele">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Modéle </th>
+                      <td mat-cell *matCellDef="let element"> {{element.modele}}  </td>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="nbrPlace">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de Place  </th>
+                      <td mat-cell *matCellDef="let element"> {{element.nbrPlace}} </td>
+                    </ng-container> 
+                 
+                      <ng-container matColumnDef="energie">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Energie </th>
+                        <td mat-cell *matCellDef="let element">{{element.energie}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="description">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+                          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions  </th>
+                            <td mat-cell *matCellDef="let element">  
+                                <button pButton pRipple icon="pi pi-check-circle" class="p-button-rounded p-button-warning" (click)="validerVehicule(element)" ></button>  
+                            </td>
+                          </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+               
+                </table>
+                  <br>
+                  <mat-paginator class="mat-elevation-z8" [length]="length"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="pageSizeOptions"
+                  (page)="pageChanged($event)"
+                  aria-label="Select page">
+          </mat-paginator>
+                  
+          
+                 
+          </div>
+          </div>
+          
+          </div>
+          
+          
+          </div>
+</p-dialog>
+

@@ -1,0 +1,55 @@
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 mt-5 xl:mt-0 text-center">
+        </div>
+        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, #0F9FFF 50%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <div class="text-center mb-5">
+                    <div class="text-900 text-3xl font-medium mb-3">Bienvenue!</div>
+                    <span class="text-600 font-medium">Se connecter pour continuer !</span>
+                </div>
+            
+                <form [formGroup]="form"  class="w-full md:w-10 mx-auto">
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Nom d'utilisateur</label>
+                    <input id="email1" type="text" formControlName="email" placeholder="Email address" pInputText class="w-full mb-3" style="padding:1rem;">
+                    <label for="password1" class="block text-900 text-xl font-medium mb-2">Mot de Passe</label>
+                    <input id="password1" type="password" formControlName="password" placeholder="Password" pInputText class="w-full mb-3" style="padding:1rem;">
+            
+                    
+                    <div class="flex align-items-center justify-content-between mb-5">
+              
+                        <!-- <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a> -->
+                    </div>
+                    <button pButton pRipple label="S'authentifier" class="w-full p-3 text-xl" (click)="login()"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p-dialog [(visible)]="dialogerror" header="Cordonnées incorrects" [modal]="true" [style]="{width:'450px'}">
+  
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3 error" style="font-size: 2rem"></i>
+        <span style="color: red;" >Le nom d'utilisateur ou le mot de passe sont incorrect<b> </b></span>
+    </div>
+    <div class="flex flex-end" style="align-items: flex-end">
+        <button  style="color: red;" pButton pRipple icon="pi pi-times" class="p-button-text" label="Encore une autre fois" (click)="dialogerror = false"></button>
+    </div>
+</p-dialog> 

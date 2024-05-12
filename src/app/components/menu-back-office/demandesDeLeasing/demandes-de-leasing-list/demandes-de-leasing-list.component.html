@@ -1,0 +1,124 @@
+<div class="container">
+    <br>
+    <br>
+     <div class="row">
+      <div class="col-12">
+        <div class="card">    
+          <div class="table-responsive">
+            
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste des Demandes</h5>
+                    </div>
+                </ng-template>
+    
+                
+    
+                <ng-template pTemplate="right">
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"  placeholder="Rechercher..." />
+                    </span>
+                </ng-template>
+            </p-toolbar>    
+<table mat-table [dataSource]="demandeDataSource" matSort (matSortChange)="customSort($event)" class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Position Column -->
+     <ng-container matColumnDef="nomVehicule">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom de Véhicule  </th>
+  
+      <td mat-cell *matCellDef="let element">   {{element.product.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="prixVéhicule">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix de véhicule </th>
+      <td mat-cell *matCellDef="let element">  {{element.product.prix}} </td>
+    </ng-container> 
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="nbrEcheance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre d'écheance </th>
+      <td mat-cell *matCellDef="let element"> {{element.nbrEcheance}}  </td>
+    </ng-container> -->
+    
+
+     <!-- Symbol Column -->
+    <ng-container matColumnDef="duree">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Durée  </th>
+      <td mat-cell *matCellDef="let element"> {{element.duree}} </td>
+    </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
+
+            <td mat-cell  *matCellDef="let element"> 
+                    {{element.client.email}}
+                </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom et prénom </th>
+          <td mat-cell *matCellDef="let element"> {{element.client.lastName}} {{element.client.firstName}} </td>
+        </ng-container>
+        <!-- k-->
+      <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions  </th>
+          <td mat-cell *matCellDef="let element">  
+              <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-warning mr-2" (click)="valider(element)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteDemande(element)" ></button>  
+          </td>
+        </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <br>
+          <mat-paginator class="mat-elevation-z8" [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page">
+</mat-paginator>
+        
+
+       
+      </div>
+    </div>
+    
+  </div>
+
+
+</div>
+
+
+
+
+</div>
+<p-dialog [(visible)]="deleteDemandeDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+  
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3 error" style="font-size: 2rem"></i>
+        <span *ngIf="demande">Etes-vous sûr de vouloir supprimer  La demande de <b>{{demande.name}}</b>?</span>
+    </div>
+    <div class="flex flex-end" style="align-items: flex-end">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteDemandeDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+    </div>
+</p-dialog> 
+<p-dialog [(visible)]="validerDemandeDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+  
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-check mr-3 " style="font-size: 2rem"></i>
+        <span *ngIf="demande">Etes-vous sûr de vouloir Valider  La demande de <b>{{demande.name}}</b>? </span>
+    </div>
+    <div class="flex flex-end" style="align-items: flex-end">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="validerDemandeDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirm(demande)"></button>
+  </div>
+</p-dialog> 
+<div class="layout-sidebar">        
+    <app-menu-back-office>
+</app-menu-back-office>
+</div> 

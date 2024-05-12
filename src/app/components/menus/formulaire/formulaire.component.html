@@ -1,0 +1,166 @@
+<h2 class="title text-center">
+    <span class="text-primary">Veuillez compléter  </span>
+
+le formulaire  <br> <span class="text-primary"> suivant pour </span> suivrez la simulation
+</h2> 
+<form  [formGroup]="clientForm"class=" row g-3">
+    <div class="col-md-6">
+        <label for="name">Nom</label>
+        <input type="text" pInputText   formControlName="lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['lastName'].errors}"/>
+        <div *ngIf="clientForm.controls['lastName'].errors">
+        <small class="error" *ngIf="submitted && clientForm.controls['lastName'].errors.required">*Le champs Prenom est obligatoire.</small>
+        <small class="error" *ngIf="submitted && clientForm.controls['lastName'].errors.minlength">*Le champs Prenom doit contenir au moins 3 caractéres.</small>
+        </div>  
+        </div>
+    <div class="col-md-6">
+        <label for="name">Prenom</label>
+        <input type="text" pInputText id="name" formControlName="firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['firstName'].errors}"/>
+        <div *ngIf="clientForm.controls['firstName'].errors">
+        <small class="error" *ngIf="submitted && clientForm.controls['firstName'].errors.required">*Le champs Prenom est obligatoire.</small>
+        <small class="error" *ngIf="submitted && clientForm.controls['firstName'].errors.minlength">*Le champs Prenom doit contenir au moins 3 caractéres.</small>
+        </div>   
+        </div>
+        <div class="col-12">
+            <label for="name">Email</label>
+            <input type="text" pInputText id="name"formControlName="email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['email'].errors}"/>
+            <div *ngIf="clientForm.controls['email'].errors">
+            <small class="error" *ngIf="submitted && clientForm.controls['email'].errors.required">*Le champs Email est obligatoire.</small>
+            <small class="error" *ngIf="submitted && clientForm.controls['email'].errors.email">*Le champs Email doit etre un email valide.</small>
+        </div>    
+        </div>
+          <div class="col-6">
+            <label class="form-label">Sexe</label>
+            <p-dropdown matColumnDef="sexe"id="sexe" formControlName="Gender" required [options]="sexe" optionLabel="type" [(ngModel)]="selectedDropSexe" placeholder="Choisir votre Sexe"  [ngClass]="{'ng-invalid ng-dirty' : submitted && clientForm.controls['Gender'].errors}"  [showClear]="true">
+            </p-dropdown>
+            <div *ngIf="clientForm.controls['Gender'].errors">
+    <small class="error" *ngIf="submitted && clientForm.controls['Gender'].errors.required">*Le champs Sexe est obligatoire.</small> 
+</div>     
+</div>   
+  <div class="col-6">
+    <label for="name">Date de naissance</label>
+    <input type="date" pInputText id="name" [(ngModel)]="client.birthDate" formControlName="birthDate" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['birthDate'].errors}"/>
+    <div *ngIf="clientForm.controls['birthDate'].errors">
+    <small class="error" *ngIf="submitted && clientForm.controls['birthDate'].errors.required">*Le champs Date de naissance est obligatoire.</small>
+</div>
+</div> 
+
+ 
+<div class="col-md-6">
+    <label for="name">Lieu de Naissance</label>
+    <input type="text" pInputText id="name" [(ngModel)]="client.birthplace" formControlName="birthPlace" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['birthPlace'].errors}"/>
+    <div *ngIf="clientForm.controls['birthPlace'].errors">
+    <small class="error" *ngIf="submitted && clientForm.controls['birthPlace'].errors.required">*Le champs lieu de naissance est obligatoire.</small>
+    <small class="error" *ngIf="submitted && clientForm.controls['birthPlace'].errors.minlength">*Le champs lieu de naissance doit contenir au moins 4 caractéres.</small>
+    </div>   
+</div>
+
+    <div class="col-md-6">
+        <label for="name">Titre d'emploi</label>
+        <input type="text" pInputText id="name" [(ngModel)]="client.jobTitle"  formControlName="jobTitle" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['jobTitle'].errors}"/>
+        <div *ngIf="clientForm.controls['jobTitle'].errors">
+        <small class="error" *ngIf="submitted && clientForm.controls['jobTitle'].errors.required">*Le champs lieu de naissance est obligatoire.</small>
+        <small class="error" *ngIf="submitted && clientForm.controls['jobTitle'].errors.minlength">*Le champs lieu de naissance doit contenir au moins 8 caractéres.</small>
+        </div>   
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Nationality</label>
+            <p-dropdown matColumnDef="nationalite"id="nationalite" formControlName="nationalite" required [options]="nationalite" optionLabel="name" [(ngModel)]="selectedDropNationality" placeholder="Choisir votre Nationalité"  [ngClass]="{'ng-invalid ng-dirty' : submitted && clientForm.controls['nationalite'].errors}"  [showClear]="true">
+            </p-dropdown>
+            <div *ngIf="clientForm.controls['nationalite'].errors">
+    <small class="error" *ngIf="submitted && clientForm.controls['nationalite'].errors.required">*Le champs Nationalité est obligatoire.</small> 
+        </div>
+            </div>
+
+    
+     <div class="col-md-6">
+        <label class="form-label">Etat civil</label>
+        <p-dropdown matColumnDef="etatCivil"id="etatCivil" formControlName="matrialStatus" required [options]="etatCivil" optionLabel="etat" [(ngModel)]="selectedDropEtatCivil" placeholder="Choisir votre Etat Civil"  [ngClass]="{'ng-invalid ng-dirty' : submitted && clientForm.controls['matrialStatus'].errors}"  [showClear]="true">
+        </p-dropdown>
+        <div *ngIf="clientForm.controls['matrialStatus'].errors">
+<small class="error" *ngIf="submitted && clientForm.controls['matrialStatus'].errors.required">*Le champs Sexe est obligatoire.</small> 
+    </div>   
+    </div>
+    
+            <div class="col-md-6">
+                <label class="form-label">Numéro de Téléphone</label>
+                <input type="tel" pInputText id="phone" [(ngModel)]="client.phoneNumber"  formControlName="phoneNumber" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['phoneNumber'].errors}"/>
+                <div *ngIf="clientForm.controls['phoneNumber'].errors">
+                <small class="error" *ngIf="submitted && clientForm.controls['phoneNumber'].errors.required">*Le champs Numéro de Téléphone est obligatoire.</small>
+                <small class="error" *ngIf="submitted && clientForm.controls['phoneNumber'].errors.minlength">*Le champs Numéro de Téléphone doit contenir au moins 8 caractéres.</small>
+                </div>   
+            </div>
+    
+            <div class="col-md-6">
+                    <label for="name">Numéro de FIX ou Numéro de Téléphone N°2 </label>
+                    <input type="tel" pInputText id="phone" [(ngModel)]="client.landLine" 
+                    formControlName="landline" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !clientForm.controls['landline'].errors}"/>
+                    <div *ngIf="clientForm.controls['landline'].errors">
+                    <small class="error" *ngIf="submitted && clientForm.controls['landline'].errors.required">*Le champs Numéro de FIX est obligatoire.</small>
+                    <small class="error" *ngIf="submitted && clientForm.controls['landline'].errors.minlength">*Le champs Numéro de FIX doit contenir au moins 8 caractéres.</small>
+                    </div>   
+                    </div>   
+   
+    <div class="col-md-6">
+        <br>
+        <button pButton pRipple type="button" label="Suivant" class="p-button-info p-button-text mr-2 mb-2"(click)="inscriptionDialog()"></button>
+    </div>
+  </form>
+
+
+  <p-dialog [(visible)]="authentificationDialog" [style]="{width: '450px'}" header="Authentification" [modal]="true" class="p-fluid">
+    <form  [formGroup]="authentificationForm">
+        
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="name">Nom d'utilisateur</label>
+                <input type="text" pInputText id="name" value="{{email}}"/>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="name">Mot de passe</label>
+                <input type="password"  formControlName="password" [(ngModel)]="client.password" autofocus pInputText id="name"/>
+                </div>
+        <div>
+            <button pButton pRipple label="s'authentifier" icon="pi pi-check" class="p-button" (click)="authentifier()"></button>
+        </div>
+        <div>
+            <p> Si vous n'avais pas de compte inscrivez-vous</p>
+            <!-- // <button mat-button [mat-dialog-close]="data.email" cdkFocusInitial>s'inscrire</button> -->
+             <button pButton pRipple label="s'inscrire" (click)="inscriptionDialog()" icon="pi pi-check" class="p-button" ></button>
+           
+        </div>
+    </form>
+</p-dialog>
+<p-dialog [(visible)]="inscrptionDialog" [style]="{width: '450px'}" header="Inscription" [modal]="true" class="p-fluid">
+    <form [formGroup]="authentificationForm">
+        <div class="formgrid grid">
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="name">Nom d'utilisateur</label>
+                    <input type="text" pInputText id="name" value="{{email}}"/>
+                    </div>
+                </div>
+            <div class="field col">
+                <label for="name">Mot de passe</label>
+                <input type="password" pInputText id="name" formControlName="password" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !authentificationForm.controls['password'].errors}"/>
+                <div *ngIf="authentificationForm.controls['password'].errors">
+                <small class="error" *ngIf="submitted && authentificationForm.controls['password'].errors.required">Le champs Mot de passe est obligatoire.</small>
+                <small class="error" *ngIf="submitted && authentificationForm.controls['password'].errors.minlength">*Le champs Mot de passe doit contenir au moins 8 caractéres.</small>
+                </div>
+            </div>
+        </div>  
+        <div class="field col">
+            <label for="name">Confirm Mot de passe</label>
+            <input type="password" pInputText placeholder="Password" formControlName="confirmpassword" (input)="onPasswordInput()">
+           <div *ngIf="authentificationForm.controls['confirmpassword'].errors">
+            <mat-error *ngIf="confirmpassword.hasError('required')">Please confirm your password</mat-error>
+            <mat-error *ngIf="confirmpassword.invalid && !confirmpassword.hasError('required')">Passwords don't match</mat-error>
+              </div>  
+        </div>
+        <div>
+            <button pButton pRipple label="Inscription" icon="pi pi-check" class="p-button" (click)="inscription()"></button>
+        </div>
+    </form> 
+    
+  
+</p-dialog>

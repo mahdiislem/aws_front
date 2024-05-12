@@ -1,0 +1,263 @@
+<style>
+    .error{
+        color:red
+    }
+</style>
+<div class="container">
+<br>
+
+<br>
+ <div class="row">
+  <div class="col-12">
+    <div class="card">    
+      <div class="table-responsive">
+        
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Liste des Véhicules</h5>
+                </div>
+            </ng-template>
+
+            
+
+            <ng-template pTemplate="right">
+                <div class="my-2">
+                    <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-info mr-2" (click)="openNew()"></button>
+                </div>
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  placeholder="Rechercher..." />
+                </span>
+            </ng-template>
+        </p-toolbar>
+        <table mat-table [dataSource]="produitsDataSource" matSort (matSortChange)="customSort($event)" class="mat-elevation-z8">
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+          <!-- Position Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom  </th>
+        
+            <td mat-cell *matCellDef="let element">   {{element.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="prix">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Prix </th>
+            <td mat-cell *matCellDef="let element">  {{element.prix}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="modele">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Modéle </th>
+            <td mat-cell *matCellDef="let element"> {{element.modele}}  </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="nbrPlace">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de Place  </th>
+            <td mat-cell *matCellDef="let element"> {{element.nbrPlace}} </td>
+          </ng-container> 
+       
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="energie">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Energie </th>
+              <td mat-cell *matCellDef="let element">{{element.energie}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+              </ng-container>
+              k
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions  </th>
+                <td mat-cell *matCellDef="let element">  
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" (click)="update(element)"  ></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduit(element)" ></button>  
+                </td>
+              </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <br>
+        <mat-paginator class="mat-elevation-z8" [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)"
+        aria-label="Select page">
+</mat-paginator>
+        
+
+       
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+</div>
+
+<p-dialog [(visible)]="produitDialog" [style]="{width: '450px'}" header="Details d'un véhicule" [modal]="true" class="p-fluid">
+    <form [formGroup]="produitForm">
+        
+        
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="name">Nom</label>
+                <input type="text" pInputText id="name" formControlName="name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && produitForm.controls['name'].errors}"/>
+                <div *ngIf="produitForm.controls['name'].errors">
+                    <small class="error" *ngIf="submitted && produitForm.controls['name'].errors.required">*Le champs Nom est obligatoire.</small>
+                    <small class="error" *ngIf="submitted && produitForm.controls['name'].errors.minlength">*Le champs Nom doit contenir au moins 3 caractéres.</small>    
+                </div>
+            </div>
+            <div class="field col">
+                <label for="name">Prix</label>
+                <input type="text" pInputText id="name" formControlName="prix" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['prix'].errors}"/>
+                <div *ngIf="produitForm.controls['prix'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['prix'].errors.required">*Le champs Prix est obligatoire.</small>
+                <small class="error" *ngIf="submitted && produitForm.controls['prix'].errors.minlength">*Le champs Prix doit contenir au moins 3 caractéres.</small>
+                </div>    
+            </div>
+        </div>
+         <div class="field">
+            <label for="name">Modéle</label>
+            <input type="text" pInputText id="name" formControlName="modele" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['modele'].errors}"/>
+            <div *ngIf="produitForm.controls['modele'].errors">
+            <small class="error" *ngIf="submitted && produitForm.controls['modele'].errors.required">*Le champs Modéle de naissance est obligatoire.</small>
+            </div>
+        </div>
+        <div class="field">
+            <label for="name">Nombre de Place</label>
+            <input type="text" pInputText id="name" formControlName="nbrPlace" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['nbrPlace'].errors}"/>
+            <div *ngIf="produitForm.controls['nbrPlace'].errors">
+            <small class="error" *ngIf="submitted && produitForm.controls['nbrPlace'].errors.required">*Le champs Nombre de Place est obligatoire.</small>
+        </div>    
+        </div> 
+        <div class="formgrid grid">
+             <div class="field col">
+                <label for="name">Energie</label>
+                <input type="text" pInputText id="name" formControlName="energie" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['energie'].errors}"/>
+                <div *ngIf="produitForm.controls['energie'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['energie'].errors.required">*Le champs du numéro de energie est obligatoire.</small>
+                <small class="error" *ngIf="submitted && produitForm.controls['energie'].errors.minlength">*Le champs du numéro de energie doit contenir au moins 3 caractéres.</small>
+                </div>
+            </div>  
+                       <div class="field col">
+                <label for="name">Description</label>
+                <input type="text" pInputText id="name" formControlName="description" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['description'].errors}"/>
+                <div *ngIf="produitForm.controls['description'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['description'].errors.required">Le champs description est obligatoire.</small>
+                </div>
+            </div> 
+        </div> 
+
+        
+        <div>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button" (click)="saveProduit()"></button>
+        </div>
+    </form>
+    
+  
+</p-dialog>
+<p-dialog [(visible)]="updateProduitDialog" [style]="{width: '450px'}" header="Modifier véhicule " [modal]="true" class="p-fluid">
+    <form *ngIf="produit"[formGroup]="produitForm">
+            
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="name">Nom</label>
+                <input type="text" pInputText id="name" formControlName="name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && produitForm.controls['name'].errors}"/>
+                <div *ngIf="produitForm.controls['name'].errors">
+                    <small class="error" *ngIf="submitted && produitForm.controls['name'].errors.required">*Le champs Nom est obligatoire.</small>
+                    <small class="error" *ngIf="submitted && produitForm.controls['name'].errors.minlength">*Le champs Nom doit contenir au moins 3 caractéres.</small>    
+                </div>
+            </div>
+            <div class="field col">
+                <label for="name">Prix</label>
+                <input type="text" pInputText id="name" formControlName="prix" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['prix'].errors}"/>
+                <div *ngIf="produitForm.controls['prix'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['prix'].errors.required">*Le champs Prix est obligatoire.</small>
+                <small class="error" *ngIf="submitted && produitForm.controls['prix'].errors.minlength">*Le champs Prix doit contenir au moins 3 caractéres.</small>
+                </div>    
+            </div>
+        </div>
+         <div class="field">
+            <label for="name">Modéle</label>
+            <input type="text" pInputText id="name" formControlName="modele" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['modele'].errors}"/>
+            <div *ngIf="produitForm.controls['modele'].errors">
+            <small class="error" *ngIf="submitted && produitForm.controls['modele'].errors.required">*Le champs Modéle de naissance est obligatoire.</small>
+            </div>
+        </div>
+        <div class="field">
+            <label for="name">Nombre de Place</label>
+            <input type="text" pInputText id="name" formControlName="nbrPlace" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['nbrPlace'].errors}"/>
+            <div *ngIf="produitForm.controls['nbrPlace'].errors">
+            <small class="error" *ngIf="submitted && produitForm.controls['nbrPlace'].errors.required">*Le champs Nombre de Place est obligatoire.</small>
+        </div>    
+        </div> 
+        <div class="formgrid grid">
+             <div class="field col">
+                <label for="name">Energie</label>
+                <input type="text" pInputText id="name" formControlName="energie" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['energie'].errors}"/>
+                <div *ngIf="produitForm.controls['energie'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['energie'].errors.required">*Le champs du numéro de energie est obligatoire.</small>
+                <small class="error" *ngIf="submitted && produitForm.controls['energie'].errors.minlength">*Le champs du numéro de energie doit contenir au moins 3 caractéres.</small>
+                </div>
+            </div>  
+                       <div class="field col">
+                <label for="name">Description</label>
+                <input type="text" pInputText id="name" formControlName="description" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produitForm.controls['description'].errors}"/>
+                <div *ngIf="produitForm.controls['description'].errors">
+                <small class="error" *ngIf="submitted && produitForm.controls['description'].errors.required">Le champs description est obligatoire.</small>
+                </div>
+            </div> 
+        </div> 
+
+    
+            
+            <div>
+                <button pButton pRipple label="Modifier" icon="pi pi-check" class="p-button" (click)="updateProduit()"></button>
+            </div>
+        </form> 
+        
+  
+</p-dialog>
+
+<p-dialog [(visible)]="deleteProduitDialog" header="Confirmer" [modal]="true" [style]="{width:'450px'}">
+  
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3 error" style="font-size: 2rem"></i>
+        <span *ngIf="produit">êtes-vous sûr de vouloir supprimer <b>{{produit.name}} </b>?</span>
+    </div>
+    <div class="flex flex-end" style="align-items: flex-end">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteProduitDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+    </div>
+</p-dialog> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="layout-sidebar">        
+    <app-menu-back-office>
+
+    </app-menu-back-office>
+         </div> 
